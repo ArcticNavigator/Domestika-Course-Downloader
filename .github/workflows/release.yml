@@ -1,0 +1,84 @@
+name: Build and Release
+
+# Builds Windows, macOS and Linux installers when you push a version tag
+# (e.g. v1.0.0) and publishes them to a DRAFT GitHub Release that you then
+# review and publish manually.
+#
+# PREREQUISITE (one time): the bundled CLI binaries are not in the repo
+# (too large for git). Create a GitHub Release tagged exactly:
+#
+#     binaries
+#
+# and upload these three archives as assets to it:
+#
+#     win.tar.gz     -> contains the   win/        folder
+#     mac.tar.gz     -> contains the   mac-x64/ and mac-arm64/ folders
+#     linux.tar.gz   -> contains the   linux/      folder
+#
+# Create them locally from the project root, for example:
+#     tar -czf win.tar.gz win
+#     tar -czf mac.tar.gz mac-x64 mac-arm64
+#     tar -czf linux.tar.gz linux
+#
+# You only need to re-upload these if the binaries themselves change.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:   # allows manual runs from the Actions tab
+
+permissions:
+  contents: write       # needed to create the draft release with the installers
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false   # one OS failing should not cancel the others
+      matrix:
+        include:
+          - os: windows-latest
+            script: build:win
+            binaries: win.tar.gz
+          - os: macos-latest
+            script: build:mac
+            binaries: mac.tar.gz
+          - os: ubuntu-latest
+            script: build:linux
+            binaries: linux.tar.gz
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Download bundled binaries
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download binaries \
+            --repo "${{ github.repository }}" \
+            --pattern "${{ matrix.binaries }}" \
+            --dir .
+          tar -xzf "${{ matrix.binaries }}"
+          rm -f "${{ matrix.binaries }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and publish (draft)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The macOS/Windows builds are unsigned; don't let electron-builder
+          # try (and fail) to auto-discover a signing identity.
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+        run: npm run ${{ matrix.script }} -- --publish always

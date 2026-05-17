@@ -2,7 +2,16 @@
   "name": "downstika",
   "version": "1.0.0",
   "description": "Download Domestika courses you own",
+  "author": "ArcticNavigator <cypher.jscript@gmail.com> (https://github.com/ArcticNavigator)",
   "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/ArcticNavigator/Domestika-Course-Downloader#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArcticNavigator/Domestika-Course-Downloader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArcticNavigator/Domestika-Course-Downloader/issues"
+  },
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -23,6 +32,12 @@
     "productName": "Downstika",
     "asar": true,
     "compression": "maximum",
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "draft"
+      }
+    ],
     "files": [
       "main.js",
       "preload.js",
@@ -38,7 +53,8 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "license": "INSTALLER_TERMS.txt"
     },
     "mac": {
       "target": "dmg",
@@ -51,6 +67,8 @@
     "linux": {
       "target": ["AppImage", "deb"],
       "icon": "build/icon.png",
+      "category": "Utility",
+      "maintainer": "ArcticNavigator <cypher.jscript@gmail.com>",
       "extraResources": [
         { "from": "linux", "to": "linux" }
       ]

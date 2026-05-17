@@ -1,0 +1,38 @@
+Downstika - Terms of Use
+
+Please read this before installing.
+
+1. What this is
+   Downstika is a personal, non-commercial tool for downloading Domestika
+   courses you already own so you can watch them offline.
+
+2. You must own the course
+   Only use this for courses you bought, or that you have access to through a
+   Domestika Plus / Premium membership. Do not use it for anything you do not
+   legitimately have access to.
+
+3. No piracy
+   This tool does not promote piracy. It is not for sharing, reselling,
+   redistributing, or monetizing course content.
+
+4. Ownership of content
+   Domestika course content is owned by Domestika and its instructors and is
+   protected by copyright. This software grants you no rights over that
+   content. Downloading content may also conflict with Domestika's Terms of
+   Service, even for courses you have paid for.
+
+5. Not affiliated
+   This project is independent and is not affiliated with, endorsed by, or
+   connected to Domestika.
+
+6. As is, your responsibility
+   The software is provided "as is", with no warranty of any kind. The author
+   is not liable for any damages or for how the software is used. You use it
+   at your own responsibility.
+
+7. License
+   The software itself is provided under a custom non-commercial,
+   source-available license (see the LICENSE file in the project). You may not
+   sell, sublicense, or commercially use it.
+
+By choosing "I Agree" you confirm you have read and accept these terms.
