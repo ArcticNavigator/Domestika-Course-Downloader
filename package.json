@@ -2,6 +2,7 @@
   "name": "downstika",
   "version": "1.0.0",
   "description": "Download Domestika courses you own",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "main.js",
   "scripts": {
     "start": "electron .",

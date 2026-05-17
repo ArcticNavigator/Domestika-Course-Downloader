@@ -1,0 +1,74 @@
+THIRD-PARTY LICENSES
+====================
+
+Downstika bundles or depends on the following third-party software. Each is
+the property of its respective authors and is used under its own license.
+This file documents SOFTWARE licensing only. It does not grant any rights
+over content downloaded with this app (see the IMPORTANT NOTICE at the end).
+
+Maintainer note: verify the exact license and version of every binary you
+actually bundle in a release. Versions and build flags can change the license
+(this is especially true for FFmpeg — see below).
+
+----------------------------------------------------------------------
+Electron
+  Project: https://www.electronjs.org/
+  License: MIT
+
+Puppeteer
+  Project: https://pptr.dev/
+  License: Apache License 2.0
+
+cheerio
+  Project: https://cheerio.js.org/
+  License: MIT
+
+N_m3u8DL-RE
+  Project: https://github.com/nilaoda/N_m3u8DL-RE
+  License: MIT
+  (Bundled as a standalone executable per platform.)
+
+FFmpeg / ffprobe
+  Project: https://ffmpeg.org/
+  License: LGPL-2.1-or-later for a default build, BUT builds that enable
+           GPL components are licensed under the GPL.
+
+  IMPORTANT: This app's "Transcode to H.265" feature uses libx265, which is
+  GPL-licensed. The prebuilt FFmpeg binaries commonly used for this (e.g. the
+  gyan.dev "full" builds or BtbN "gpl" builds) are therefore GPL-2.0-or-later
+  / GPL-3.0-or-later, not LGPL.
+
+  If you distribute an installer that bundles such an FFmpeg build, the GPL
+  applies to that FFmpeg binary's distribution. To comply you must, at minimum:
+    - keep FFmpeg's copyright/license notices intact,
+    - state which FFmpeg build/version you ship, and
+    - make the corresponding FFmpeg source available (or a written offer for
+      it), e.g. by linking to the exact source release of the build you use.
+  See: https://ffmpeg.org/legal.html and https://www.ffmpeg.org/download.html
+
+----------------------------------------------------------------------
+Original work
+  This project is derived from the command-line Domestika downloader by
+  ReneR97: https://github.com/ReneR97/domestika-downloader
+
+  At the time of writing, that repository has NO license file. Absent an
+  explicit license, the original author retains all rights by default. This
+  derivative is published in good faith with credit to ReneR97; if you are
+  ReneR97 and want changes to attribution or licensing, please open an issue.
+
+----------------------------------------------------------------------
+IMPORTANT NOTICE (content, not software)
+
+The licenses above cover the third-party SOFTWARE only. They do NOT authorize
+downloading, copying, or redistributing Domestika course content.
+
+Domestika course content is copyrighted and owned by Domestika and/or its
+instructors. Domestika's Terms of Service grant only a limited license to
+access and view content, and explicitly prohibit automated access and
+downloading/reproducing content. Using this app to download Domestika content
+may breach those Terms and/or copyright law, even for courses you have paid
+for.
+
+This tool is provided for personal, offline use of content you legitimately
+have access to. You are solely responsible for how you use it. This file is
+not legal advice.
