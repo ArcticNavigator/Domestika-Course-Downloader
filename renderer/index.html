@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Downstika</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Disclaimer modal -->
+    <div id="disclaimerOverlay" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-icon">⚠️</div>
+            <h2 class="modal-title">Warning</h2>
+            <p class="modal-body">You need to own the course you want to download. So you either have to have bought it
+                or got it for "free" with your premium account.</p>
+            <button class="modal-btn" onclick="closeDisclaimer()">I Agree</button>
+        </div>
+    </div>
+
+    <div class="app">
+
+        <!-- Header -->
+        <header>
+            <h1><img src="logo.svg" class="app-logo" alt="Downstika logo">Domestika Downloader</h1>
+            <button class="help-btn" onclick="toggleInstructions()" title="How to use">?</button>
+        </header>
+
+        <!-- Instructions panel (top right, collapsible) -->
+        <div id="instructions" class="instructions" style="display:none">
+            <h3>How to use</h3>
+            <ol>
+                <li><strong>Install Cookie-Editor</strong> : Add the <em>Cookie-Editor</em> extension to Chrome from the
+                    Chrome Web Store</li>
+                <li><strong>Log in to Domestika</strong> : Open <em>domestika.org</em> in Chrome and sign in to your
+                    account</li>
+                <li><strong>Open Cookie-Editor</strong> : Click the Cookie-Editor extension icon in your Chrome toolbar
+                </li>
+                <li><strong>Copy your Session Cookie</strong> : Find <em>_domestika_session</em> in the list, click it
+                    to expand, copy the <em>Value</em> field, and paste it into the <em>Session Cookie</em> field below
+                </li>
+                <li><strong>Copy your Credentials</strong> : Find <em>_credentials_</em> in the list, copy its value and
+                    paste it into the <em>Credentials</em> field below</li>
+                <li><strong>Add courses</strong> : Paste a Domestika course URL and click <em>+ Add</em> (or press
+                    Enter). Repeat for multiple courses</li>
+                <li><strong>Start</strong> : Click <em>▶ Start Downloads</em> and watch the progress below</li>
+                <li><strong>Controls</strong> : Use ⏸ Pause, ⏭ Skip, or ⏹ Stop at any time while downloading</li>
+            </ol>
+            <p class="tip">💡 Credentials are only needed to download the Final Project video. You can leave it blank
+                if you don't need it.</p>
+
+            <h3 style="margin-top:14px;">Settings reference</h3>
+            <ul class="settings-ref">
+                <li>
+                    <strong>Subtitle Language</strong> : Language code for subtitles (e.g., <em>en</em>, <em>es</em>).
+                    Make sure the language is available for the course before setting.
+                </li>
+                <li>
+                    <strong>Transcode to H.265 (HEVC)</strong> : When enabled, automatically transcodes the downloaded
+                    file to H.265/HEVC if it isn't already. Reduces file size while maintaining quality. Disable to keep
+                    the original format.
+                </li>
+                <li>
+                    <strong>Use GPU encoder (NVENC)</strong> : Only relevant when Transcode to H.265 is enabled.
+                    <ul class="settings-sub">
+                        <li><em>Checked</em> : Uses NVIDIA GPU hardware acceleration. Faster, but requires an NVIDIA GPU
+                            with NVENC support.</li>
+                        <li><em>Unchecked</em> : Uses CPU-based encoding (libx265). Works on any machine, but slower.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Max Parallel Downloads</strong> : Number of downloads and transcodes to run at the same
+                    time. Recommended: 2-4. Higher values speed things up but use more CPU and memory.
+                </li>
+            </ul>
+        </div>
+
+        <!-- SETTINGS -->
+        <section class="card">
+            <div class="card-header">
+                <h2>⚙️ Settings</h2>
+                <span class="os-badge" id="osInfo" title="Auto-detected operating system — dot blinks faster as CPU load rises">
+                    <span class="live-dot" id="liveDot"></span><span id="osText">Detecting…</span>
+                </span>
+            </div>
+
+            <div class="field">
+                <label>Session Cookie <small>(value of _domestika_session)</small></label>
+                <input id="cookie" type="password" placeholder="Paste your cookie here">
+            </div>
+
+            <div class="field">
+                <label>Credentials <small>(value of _credentials_)</small></label>
+                <input id="credentials" type="password" placeholder="Paste your credentials here">
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Subtitle Language</label>
+                    <input id="subtitleLang" type="text" value="en" style="width:70px">
+                </div>
+                <div class="field">
+                    <label>Max Parallel Downloads</label>
+                    <input id="maxConcurrent" type="number" value="3" min="1" max="10" style="width:60px">
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Save Location <small>(where downloaded videos are saved)</small></label>
+                <div class="row">
+                    <input id="savePath" type="text" placeholder="Default: Downloads/domestika_courses (leave blank to use it)">
+                    <button class="browse-btn" onclick="browseFolder()">📁 Browse</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="transcodeHevc">
+                    Transcode to H.265 (HEVC) after download <small>(requires ffmpeg)</small>
+                </label>
+                <label class="checkbox-label" id="nvencRow" style="display:none">
+                    <input type="checkbox" id="useNvenc">
+                    Use GPU encoder (NVENC) <small>(faster - requires NVIDIA GPU)</small>
+                </label>
+            </div>
+        </section>
+
+        <!-- QUEUE -->
+        <section class="card">
+            <h2>📋 Course Queue</h2>
+            <p class="queue-hint">You should be on the "content" page of the course you want to download. You will know
+                you are right when you see the URL ends with "/course".</p>
+            <div class="row">
+                <input id="urlInput" type="text" placeholder="https://www.domestika.org/en/courses/...">
+                <button class="add-btn" onclick="addCourse()">+ Add</button>
+            </div>
+            <ul id="queue"></ul>
+            <button id="startBtn" class="primary" onclick="startDownloads()">▶ Start Downloads</button>
+        </section>
+
+        <!-- PROGRESS -->
+        <section class="card" id="progressSection" style="display:none">
+
+            <!-- Overall progress bar -->
+            <div class="overall-progress">
+                <div class="overall-header">
+                    <span id="overallLabel">0 / 0 videos</span>
+                    <div class="controls">
+                        <button id="pauseBtn" class="ctrl-btn" onclick="togglePause()">⏸ Pause</button>
+                        <button id="skipBtn" class="ctrl-btn" onclick="skipDownload()">⏭ Skip</button>
+                        <button id="stopBtn" class="ctrl-btn stop" onclick="stopDownloads()">⏹ Stop All</button>
+                    </div>
+                </div>
+                <div class="bar-track">
+                    <div id="overallBar" class="bar-fill" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Per-video list -->
+            <div id="progressList"></div>
+
+            <!-- Log -->
+            <div class="log-header">
+                <span>Log</span>
+                <button class="copy-btn" onclick="copyLog()" id="copyBtn">📋 Copy</button>
+            </div>
+            <div id="log"></div>
+
+        </section>
+
+    </div>
+    <script src="renderer.js"></script>
+</body>
+
+</html>

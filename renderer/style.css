@@ -1,0 +1,663 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Disclaimer modal ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 32px 28px 24px;
+    max-width: 380px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+.modal-icon {
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.modal-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111;
+}
+
+.modal-body {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 6px;
+}
+
+.modal-btn {
+    width: 100%;
+    background: #f02d00;
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 4px;
+}
+
+.modal-btn:hover {
+    opacity: 0.85;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Arial, Helvetica, Roboto, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background: #f2f2f2;
+    color: #111111;
+    font-size: 14px;
+    overflow-y: auto;
+}
+
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── Header ── */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f02d00;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header h1 .app-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;   /* rounded app-icon look against the white header */
+    flex-shrink: 0;
+    display: block;
+}
+
+.help-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    color: #e0004d;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #e0004d;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    transition: background 0.15s, color 0.15s;
+}
+
+.help-btn:hover {
+    background: #d0d0d0;
+    color: #e0004d;
+    opacity: 1;
+}
+
+.help-btn.active {
+    background: #e0004d;
+    color: #fff;
+}
+
+/* ── Instructions panel ── */
+.instructions {
+    background: #eef2ff;
+    border: 1px solid #c0caff;
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+
+.instructions h3 {
+    font-size: 13px;
+    color: #3344cc;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.instructions ol {
+    padding-left: 18px;
+    color: #333;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.instructions ol strong {
+    color: #111;
+}
+
+.instructions ol em {
+    color: #e0004d;
+    font-style: normal;
+}
+
+.instructions .tip {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #888;
+}
+
+.settings-ref {
+    padding-left: 18px;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.settings-sub {
+    padding-left: 16px;
+    margin-top: 2px;
+    list-style: disc;
+    color: #555;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ── Card ── */
+.card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+}
+
+.queue-hint {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #444;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: #e0004d;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* ── Field groups (label + input wrapped together) ── */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ── Labels & Inputs ── */
+label {
+    font-size: 12px;
+    color: #555;
+    display: block;
+    margin-bottom: 0;
+}
+
+label small {
+    color: #aaa;
+    font-size: 11px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px 10px;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: #111;
+    font-size: 13px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #e0004d;
+}
+
+/* ── Card header: title on the left, OS badge on the right ── */
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ── Read-only auto-detected OS badge (Domestika-red capsule tag) ── */
+.os-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #f02d00;
+    background: #ffffff;
+    border: 1px solid #f02d00;
+    border-radius: 999px;
+    padding: 4px 12px;
+    line-height: 1;
+    cursor: default;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+/* Live status dot — blink speed is driven by CPU load (set from JS) */
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #21c25b;
+    box-shadow: 0 0 4px #21c25b;
+    flex-shrink: 0;
+    animation: liveBlink 1.5s steps(1, end) infinite;
+}
+
+/* Flat ranges + steps timing = instant on/off, no smooth fade */
+@keyframes liveBlink {
+    0%,  49.99%  { opacity: 1; }
+    50%, 100%    { opacity: 0.1; }
+}
+
+/* ── Row layout ── */
+.row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.row>div {
+    flex: 1;
+}
+
+.row>input {
+    flex: 5;
+}
+
+/* ── Buttons ── */
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.add-btn {
+    background: transparent;
+    color: #f02d00;
+    border: 1px solid #f02d00;
+    transition: background 0.15s, color 0.15s;
+}
+
+.add-btn:hover {
+    background: #f02d00;
+    color: #fff;
+    opacity: 1;
+}
+
+.browse-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #eeeeee;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.browse-btn:hover {
+    background: #e0e0e0;
+    opacity: 1;
+}
+
+button.primary {
+    background: #f02d00;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+button.primary:hover {
+    background: #eeeeee;
+    color: #f02d00;
+    opacity: 1;
+}
+
+/* ── Queue ── */
+#queue {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#queue li {
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    word-break: break-all;
+}
+
+#queue li .remove-btn {
+    background: none;
+    color: #bbb;
+    font-size: 18px;
+    font-weight: 300;
+    padding: 0 4px;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+#queue li .remove-btn:hover {
+    color: #e0004d;
+
+}
+
+/* ── Overall progress ── */
+.overall-progress {
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.overall-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#overallLabel {
+    font-size: 13px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* ── Control buttons ── */
+.controls {
+    display: flex;
+    gap: 8px;
+}
+
+.ctrl-btn {
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    background: #e8e8e8;
+    color: #333;
+}
+
+.ctrl-btn:hover {
+    background: #ddd;
+    color: #111;
+}
+
+.ctrl-btn.stop {
+    background: #fde8e8;
+    color: #cc0000;
+}
+
+.ctrl-btn.stop:hover {
+    background: #fcd0d0;
+}
+
+.ctrl-btn.paused {
+    background: #e8f5e8;
+    color: #1a7a1a;
+}
+
+
+/* ── Progress bars ── */
+.bar-track {
+    width: 100%;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: #e0004d;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.bar-fill.done {
+    background: #027d88;
+}
+
+.bar-fill.skipped {
+    background: #e07822;
+}
+
+.bar-fill.cancelled {
+    background: #888888;
+}
+
+.bar-fill.interrupted {
+    background: #e0004d;
+}
+
+.bar-fill.error {
+    background: #cc0000;
+}
+
+/* ── Per-video progress items ── */
+#progressList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.progress-item {
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.progress-item .item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-item .icon {
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.progress-item .title {
+    font-size: 12px;
+    color: #333;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.progress-item .detail {
+    font-size: 11px;
+    color: #999;
+    flex-shrink: 0;
+}
+
+.progress-item .item-retry-btn {
+    background: none;
+    color: #ccc;
+    font-size: 14px;
+    padding: 0 4px;
+    margin-left: 4px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.progress-item .item-retry-btn:hover {
+    color: #e07822;
+}
+
+.progress-item .item-cancel-btn {
+    background: none;
+    color: #ccc;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 0 4px;
+    margin-left: 6px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.progress-item .item-cancel-btn:hover {
+    color: #e0004d;
+    opacity: 1;
+}
+
+/* Pulsing animation for active downloads */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+.bar-fill.active {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ── Log ── */
+.log-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 6px;
+    margin-top: 20px;
+}
+
+.copy-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #eeeeee;
+    color: #666;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.copy-btn:hover {
+    background: #e0e0e0;
+    color: #111;
+}
+
+#log {
+    background: #f7f7f7;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #666;
+    max-height: 130px;
+    overflow-y: auto;
+    font-family: 'Consolas', monospace;
+    line-height: 1.7;
+}

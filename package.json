@@ -1,0 +1,58 @@
+{
+  "name": "downstika",
+  "version": "1.0.0",
+  "description": "Download Domestika courses you own",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "puppeteer": "^24.15.0"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.downstika.app",
+    "productName": "Downstika",
+    "asar": true,
+    "compression": "maximum",
+    "files": [
+      "main.js",
+      "preload.js",
+      "downloader.js",
+      "renderer/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png",
+      "extraResources": [
+        { "from": "win", "to": "win" }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.png",
+      "extraResources": [
+        { "from": "mac-x64", "to": "mac-x64" },
+        { "from": "mac-arm64", "to": "mac-arm64" }
+      ]
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "build/icon.png",
+      "extraResources": [
+        { "from": "linux", "to": "linux" }
+      ]
+    }
+  }
+}

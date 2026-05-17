@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Bundled CLI binaries (N_m3u8DL-RE, ffmpeg, ffprobe).
+# These are large (~1 GB total) and are downloaded separately, not committed.
+# See README for where to get them. Each folder is required to build that platform.
+win/
+mac-x64/
+mac-arm64/
+linux/
+
+# Downloaded courses (user data)
+domestika_courses/
+
+# Runtime / debug artifacts
+Logs/
+*.log
+debug_course_page.html
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
